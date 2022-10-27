@@ -19,10 +19,6 @@ public class Task implements Function<Long, Runnable> {
         this.processTime = generateRandom();
     }
 
-    private static int generateRandom() {
-        return (int) (Math.random() * Consts.MAX_TASK_PROCESS_DURATION);
-    }
-
     @Override
     public Runnable apply(Long aLong) {
         return () -> {
@@ -30,6 +26,10 @@ public class Task implements Function<Long, Runnable> {
             trySleepForProcessTime();
             System.out.printf(MessagePatterns.SUBSCRIBER_FINISHED_TASK.getValue(), aLong, name);
         };
+    }
+
+    private static int generateRandom() {
+        return (int) (Math.random() * Consts.MAX_TASK_PROCESS_DURATION);
     }
 
     private void trySleepForProcessTime() {

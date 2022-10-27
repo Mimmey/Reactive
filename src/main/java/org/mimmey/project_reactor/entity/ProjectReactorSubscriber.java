@@ -45,12 +45,12 @@ public final class ProjectReactorSubscriber implements Subscriber<Task> {
     @Override
     public void onComplete() {
         taskProcessExecutor.shutdown();
-        tryAwaitTerminationByFinish(taskProcessExecutor);
+        tryAwaitTerminationUntilFinish(taskProcessExecutor);
 
         System.out.printf(MessagePatterns.SUBSCRIBER_FINISHED_ALL_TASKS.getValue(), id);
     }
 
-    private static void tryAwaitTerminationByFinish(ExecutorService executorService) {
+    private static void tryAwaitTerminationUntilFinish(ExecutorService executorService) {
         try {
             while (true) {
                 if (executorService.awaitTermination(

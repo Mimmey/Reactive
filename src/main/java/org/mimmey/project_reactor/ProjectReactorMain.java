@@ -1,21 +1,26 @@
 package org.mimmey.project_reactor;
 
+import org.mimmey.util.generator.Generator;
 import org.mimmey.util.Consts;
 import org.mimmey.Task;
-import org.mimmey.util.TaskGenerator;
+import org.mimmey.util.generator.TaskStreamGenerator;
 import org.mimmey.project_reactor.entity.ProjectReactorSubscriber;
 import org.reactivestreams.Subscriber;
 import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
 
+import java.util.stream.Stream;
+
 public class ProjectReactorMain {
 
-    public static void main(String[] args) {
-        Subscriber<Task> subscriber1 = new ProjectReactorSubscriber(1L, 2);
-        Subscriber<Task> subscriber2 = new ProjectReactorSubscriber(2L, 5);
-        Subscriber<Task> subscriber3 = new ProjectReactorSubscriber(3L, 10);
+    private static final Generator<Stream<Task>> taskStreamGenerator = new TaskStreamGenerator();
 
-        Flux<Task> taskFlux = Flux.fromStream(TaskGenerator.generateTaskStream());
+    public static void main(String[] args) {
+        Subscriber<Task> subscriber1 = new ProjectReactorSubscriber(1L, 1);
+        Subscriber<Task> subscriber2 = new ProjectReactorSubscriber(2L, 2);
+        Subscriber<Task> subscriber3 = new ProjectReactorSubscriber(3L, 5);
+
+        Flux<Task> taskFlux = Flux.fromStream(taskStreamGenerator.generate());
 
         ConnectableFlux<Task> connectableTaskFlux = taskFlux.publish();
 
