@@ -22,7 +22,9 @@ public final class ProjectReactorSubscriber implements Subscriber<Task> {
     public ProjectReactorSubscriber(long id, int taskPortionSize) {
         this.id = id;
         this.taskPortionSize = taskPortionSize;
-        this.taskProcessExecutor = Executors.newFixedThreadPool(taskPortionSize);
+
+        int threadsNumber = Math.min(taskPortionSize, Consts.MAX_THREADS_NUMBER);
+        this.taskProcessExecutor = Executors.newFixedThreadPool(threadsNumber);
     }
 
     @Override

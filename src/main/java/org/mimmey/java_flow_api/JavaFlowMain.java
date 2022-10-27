@@ -19,11 +19,13 @@ public class JavaFlowMain {
 
         Flow.Subscriber<Task> subscriber1 = new JavaFlowSubscriber(1L, 1);
         Flow.Subscriber<Task> subscriber2 = new JavaFlowSubscriber(2L, 2);
-        Flow.Subscriber<Task> subscriber3 = new JavaFlowSubscriber(3L, 5);
+        Flow.Subscriber<Task> subscriber3 = new JavaFlowSubscriber(3L, 4);
+        Flow.Subscriber<Task> subscriber4 = new JavaFlowSubscriber(4L, 10);
 
         publisher.subscribe(subscriber1);
         publisher.subscribe(subscriber2);
         publisher.subscribe(subscriber3);
+        publisher.subscribe(subscriber4);
 
         taskStreamGenerator.generate().forEach(publisher::submit);
 

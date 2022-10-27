@@ -18,7 +18,8 @@ public class ProjectReactorMain {
     public static void main(String[] args) {
         Subscriber<Task> subscriber1 = new ProjectReactorSubscriber(1L, 1);
         Subscriber<Task> subscriber2 = new ProjectReactorSubscriber(2L, 2);
-        Subscriber<Task> subscriber3 = new ProjectReactorSubscriber(3L, 5);
+        Subscriber<Task> subscriber3 = new ProjectReactorSubscriber(3L, 4);
+        Subscriber<Task> subscriber4 = new ProjectReactorSubscriber(4L, 10);
 
         Flux<Task> taskFlux = Flux.fromStream(taskStreamGenerator.generate());
 
@@ -27,6 +28,7 @@ public class ProjectReactorMain {
         connectableTaskFlux.subscribe(subscriber1);
         connectableTaskFlux.subscribe(subscriber2);
         connectableTaskFlux.subscribe(subscriber3);
+        connectableTaskFlux.subscribe(subscriber4);
 
         connectableTaskFlux.connect();
 

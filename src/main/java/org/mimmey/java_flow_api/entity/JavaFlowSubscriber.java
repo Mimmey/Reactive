@@ -21,7 +21,9 @@ public final class JavaFlowSubscriber implements Flow.Subscriber<Task> {
     public JavaFlowSubscriber(long id, int taskPortionSize) {
         this.id = id;
         this.taskPortionSize = taskPortionSize;
-        this.taskProcessExecutor = Executors.newFixedThreadPool(taskPortionSize);
+
+        int threadsNumber = Math.min(taskPortionSize, Consts.MAX_THREADS_NUMBER);
+        this.taskProcessExecutor = Executors.newFixedThreadPool(threadsNumber);
     }
 
     @Override
