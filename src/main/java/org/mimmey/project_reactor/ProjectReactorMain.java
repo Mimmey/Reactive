@@ -1,7 +1,8 @@
 package org.mimmey.project_reactor;
 
-import org.mimmey.Consts;
+import org.mimmey.util.Consts;
 import org.mimmey.Task;
+import org.mimmey.util.TaskGenerator;
 import org.mimmey.project_reactor.entity.ProjectReactorSubscriber;
 import org.reactivestreams.Subscriber;
 import reactor.core.publisher.ConnectableFlux;
@@ -14,16 +15,7 @@ public class ProjectReactorMain {
         Subscriber<Task> subscriber2 = new ProjectReactorSubscriber(2L, 5);
         Subscriber<Task> subscriber3 = new ProjectReactorSubscriber(3L, 10);
 
-        Flux<Task> taskFlux = Flux.generate(
-                () -> 1,
-                (state, sink) -> {
-                    sink.next(Task.of(Consts.TASK_NAME_PATTERN + state));
-                    if (state == 10) {
-                        sink.complete();
-                    }
-                    return state + 1;
-                }
-        );
+        Flux<Task> taskFlux = Flux.fromStream(TaskGenerator.generateTaskStream());
 
         ConnectableFlux<Task> connectableTaskFlux = taskFlux.publish();
 
@@ -32,6 +24,7 @@ public class ProjectReactorMain {
         connectableTaskFlux.subscribe(subscriber3);
 
         connectableTaskFlux.connect();
+
         trySleep();
     }
 

@@ -2,7 +2,8 @@ package org.mimmey.java_flow_api.entity;
 
 import lombok.RequiredArgsConstructor;
 import org.mimmey.Task;
-import org.mimmey.Consts;
+import org.mimmey.util.Consts;
+import org.mimmey.util.MessagePatterns;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,7 +46,7 @@ public final class JavaFlowSubscriber implements Flow.Subscriber<Task> {
         taskProcessExecutor.shutdown();
         tryAwaitTerminationUntilFinish(taskProcessExecutor);
 
-        System.out.printf("Subscriber#%d finished all tasks\n", id);
+        System.out.printf(MessagePatterns.SUBSCRIBER_FINISHED_ALL_TASKS.getValue(), id);
     }
 
     private static void tryAwaitTerminationUntilFinish(ExecutorService executorService) {

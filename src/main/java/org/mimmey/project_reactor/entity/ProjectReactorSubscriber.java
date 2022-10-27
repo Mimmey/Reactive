@@ -2,7 +2,8 @@ package org.mimmey.project_reactor.entity;
 
 import lombok.RequiredArgsConstructor;
 import org.mimmey.Task;
-import org.mimmey.Consts;
+import org.mimmey.util.Consts;
+import org.mimmey.util.MessagePatterns;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
@@ -46,7 +47,7 @@ public final class ProjectReactorSubscriber implements Subscriber<Task> {
         taskProcessExecutor.shutdown();
         tryAwaitTerminationByFinish(taskProcessExecutor);
 
-        System.out.printf("Subscriber#%d finished all tasks\n", id);
+        System.out.printf(MessagePatterns.SUBSCRIBER_FINISHED_ALL_TASKS.getValue(), id);
     }
 
     private static void tryAwaitTerminationByFinish(ExecutorService executorService) {

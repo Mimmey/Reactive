@@ -1,5 +1,8 @@
 package org.mimmey;
 
+import org.mimmey.util.Consts;
+import org.mimmey.util.MessagePatterns;
+
 import java.util.function.Function;
 
 public class Task implements Function<Long, Runnable> {
@@ -23,9 +26,9 @@ public class Task implements Function<Long, Runnable> {
     @Override
     public Runnable apply(Long aLong) {
         return () -> {
-            System.out.printf("Subscriber #%d started %s\n", aLong, name);
+            System.out.printf(MessagePatterns.SUBSCRIBER_STARTED_TASK.getValue(), aLong, name);
             trySleepForProcessTime();
-            System.out.printf("Subscriber #%d finished %s\n", aLong, name);
+            System.out.printf(MessagePatterns.SUBSCRIBER_FINISHED_TASK.getValue(), aLong, name);
         };
     }
 
